@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.shop.dao.BrandDao">
+    <!--增加品牌管理信息-->
+    <insert id="addBrand">
+        insert into c_pawn_brand ( BRAND_CODE,BRAND_NAME,F_LETTER,IS_SHOW,SORT_NO)
+        values(#{brandCode},#{brandName},#{fletter},#{isShow},#{sortNo})
+    </insert>
+    <!--向中间表添加数据-->
+    <insert id="addBrandFromMid">
+         insert into c_pawn_brand_cat_rel  ( BRAND_CODE,CAT_CODE)
+        values(#{brandCode},#{catCode})
+    </insert>
+    <!--修改品牌管理的信息-->
+    <update id="updateBrand">
+        update c_pawn_brand set BRAND_NAME=#{brandName},F_LETTER=#{fletter},IS_SHOW=#{isShow},SORT_NO=#{sortNo}
+        where
+        brand_code=#{brandCode}
+    </update>
+    <!--删除中间表的品牌信息-->
+    <delete id="deleteBrandFromMiddle">
+        delete from c_pawn_brand_cat_rel where brand_code in
+        <foreach collection="array" item="code" close=")" open="(" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <!--删除品牌信息-->
+    <delete id="deleteBrand">
+        delete from c_pawn_brand where brand_code in
+        <foreach collection="array" item="code" close=")" open="(" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <!--删除品牌信息,从中间表-->
+    <delete id="deleteBrandProductFromMiddle">
+           delete from c_pawn_brand_cat_rel where brand_code=#{param1} and cat_code=#{param2}
+    </delete>
+
+    <!--获取所有的品牌信息-->
+    <select id="getAllBrand" resultType="com.huibo.gf.shop.po.BrandPo">
+        select
+--   BRAND_CODE as brandCode,
+--    BRAND_NAME   as brandName,
+--    F_LETTER     as fletter,
+--    BRAND_DESC    as brandDesc,
+--    IS_SHOW      as isShow,
+--    SORT_NO    as sortNo
+  *
+    from
+    C_PAWN_BRAND
+    </select>
+    <!--分页获取品牌的信息-->
+    <select id="getAllBrandLimit" resultType="com.huibo.gf.shop.po.BrandPo">
+    select
+  BRAND_CODE as brandCode,
+   BRAND_NAME   as brandName,
+   F_LETTER     as fletter,
+   BRAND_DESC    as brandDesc,
+   IS_SHOW      as isShow,
+   SORT_NO    as sortNo
+    from
+    C_PAWN_BRAND
+    limit
+      #{param1},#{param2}
+    </select>
+    <!--关键字查询-->
+    <select id="searchKeyWordFromBrand" resultType="com.huibo.gf.shop.po.BrandPo">
+         select
+  BRAND_CODE as brandCode,
+   BRAND_NAME   as brandName,
+   F_LETTER     as fletter,
+   BRAND_DESC    as brandDesc,
+   IS_SHOW      as isShow,
+   SORT_NO    as sortNo
+    from
+    C_PAWN_BRAND
+    where
+       BRAND_NAME like CONCAT('%',#{keyWord},'%' )
+    </select>
+    <!--验证编码是否重复-->
+    <select id="repeatBrandCode" resultType="java.lang.Integer">
+         select
+            count(*)
+        from
+            C_PAWN_BRAND
+         where
+            BRAND_CODE=#{brandCode}
+    </select>
+    <!--按编码获取该品牌管理的信息-->
+    <select id="getBrandInformation" resultType="com.huibo.gf.shop.po.BrandPo">
+        select
+        BRAND_CODE as brandCode,
+   BRAND_NAME   as brandName,
+   F_LETTER     as fletter,
+   BRAND_DESC    as brandDesc,
+   IS_SHOW      as isShow,
+   SORT_NO    as sortNo
+    from
+    C_PAWN_BRAND
+    where
+       BRAND_CODE =#{brandCode}
+    </select>
+    <!--更据编码获取该品牌管理的商品大类的信息-->
+    <select id="getProductByBrandCode" resultType="com.huibo.gf.shop.po.ProductBigPo">
+      select p.cat_code as catCode,p.cat_name as catName from
+       c_pawn_brand b,
+	   c_pawn_brand_cat_rel m,
+       c_pawn_product_cat p
+      where b.BRAND_CODE = m.BRAND_CODE and m.CAT_CODE = p.CAT_CODE and m.BRAND_CODE=#{brandCode}
+    </select>
+    <select id="getProductByGigCode" resultType="com.huibo.gf.shop.po.BrandPo">
+      select b.* from
+       c_pawn_brand b,
+	   c_pawn_brand_cat_rel m,
+       c_pawn_product_cat p
+      where b.BRAND_CODE = m.BRAND_CODE and m.CAT_CODE = p.CAT_CODE and m.CAT_CODE=#{catCode}
+    </select>
+    <select id="getBigByCatName" resultType="java.lang.String">
+        select * from  c_pawn_product_cat where cat_name=#{catName}
+    </select>
+    <select id="repeatBrandName" resultType="com.huibo.gf.shop.po.BrandPo">
+        select * from  c_pawn_brand where brand_name=#{brandName}
+    </select>
+</mapper>

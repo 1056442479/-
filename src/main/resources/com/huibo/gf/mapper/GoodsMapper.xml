@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.appraisal.dao.GoodsDao">
+    <!--新增商品信息-->
+    <insert id="addGoods">
+        insert into i_pawn_goods (goods_id,shop_code,input_user,input_date,cat_code,sub_cat_code,detail_cat_code,
+        goods_name,brand_code,article_number,first_price,goods_desc,goods_def)
+        values(#{goodsId},#{shopCode},#{inputUser},#{inputDate},#{catCode},#{subCatCode},#{detailCatCode},
+        #{goodsName},#{brandCode},#{articleNumber},#{firstPrice},#{goodsDesc},#{goodsDef})
+    </insert>
+    <!--向属性中间表添加属性的值-->
+    <insert id="insertAttr">
+        insert into i_pawn_goods_attr_rel (attr_code,goods_id,attr_value)
+        values(#{param3},#{param1},#{param2})
+    </insert>
+    <!--修改商品信息-->
+    <update id="editGoods">
+         update i_pawn_goods set shop_code=#{shopCode},input_user=#{inputUser},
+         input_date=#{inputDate},cat_code=#{catCode},sub_cat_code=#{subCatCode},detail_cat_code=#{detailCatCode},
+        goods_name=  #{goodsName},brand_code=#{brandCode},article_number=#{articleNumber},
+        first_price=#{firstPrice},goods_desc=#{goodsDesc},goods_def=#{goodsDef}
+        where goods_id=#{goodsId}
+    </update>
+    <!--向属性中间表修改属性的值-->
+    <update id="editAttr">
+         update i_pawn_goods_attr_rel set attr_code=#{param3},attr_value=#{param2}
+         where goods_id=#{param1}
+    </update>
+    <!--更距商品编码改变商品的状态-->
+    <update id="updateGoodsSate">
+         update i_pawn_goods set goods_state=#{param2} where goods_id in
+         <foreach collection="param1" item="id" close=")" open="(" separator=",">
+             #{id}
+         </foreach>
+    </update>
+    <!--删除商品的信息-->
+    <delete id="deleteGoodsByCode">
+        delete from i_pawn_goods where goods_id in
+        <foreach collection="param1" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+        and
+        goods_state=#{param2}
+    </delete>
+    <!--删除属性所有的信息-->
+    <delete id="deleteMidelByCode">
+        delete from i_pawn_goods_attr_rel where goods_id in
+        <foreach collection="array" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!--获取所有的商品信息-->
+    <select id="getAllGoods" resultType="com.huibo.gf.appraisal.po.GoodsPo">
+        select * from i_pawn_goods
+    </select>
+    <!--分页获取所有的商品信息-->
+    <select id="getAllGoodsLimit" resultType="com.huibo.gf.appraisal.po.GoodsPo">
+        select * from i_pawn_goods limit #{param1},#{param2}
+    </select>
+    <!--获取商品打类的信息-->
+    <select id="searchGigBYGoodsId" resultType="com.huibo.gf.shop.po.ProductBigPo">
+    select
+      c.*
+    from
+      c_pawn_product_cat c , i_pawn_goods i
+    where
+      c.CAT_CODE=i.CAT_CODE
+    and
+      i.GOODS_ID=#{goodsCode}
+    </select>
+    <!--获取商品小类的信息-->
+    <select id="searchSmallBYGoodsId" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+         select
+            c.*
+        from
+            c_pawn_product_small c , i_pawn_goods i
+        where
+            c.CAT_CODE=i.SUB_CAT_CODE
+        and
+            i.GOODS_ID=#{goodsCode}
+    </select>
+    <!--获取商品三级的信息-->
+    <select id="searchThreeBYGoodsId" resultType="com.huibo.gf.shop.po.ProductThreePo">
+          select
+            c.*
+          from
+            c_pawn_product_three c , i_pawn_goods i
+          where
+            c.CAT_CODE=i.DETAIL_CAT_CODE
+          and
+            i.GOODS_ID=#{goodsCode}
+    </select>
+    <select id="getGoodsByKeyWord" resultType="com.huibo.gf.appraisal.po.GoodsPo">
+        select * from i_pawn_goods
+        <where>
+            <if test="goodsId!='' and goodsId!=null">
+                  goods_id=#{param1}
+            </if>
+            <if test="goodsState!='' and goodsState!=null">
+               and goods_state=#{param2}
+            </if>
+
+            <if test="inputUser!='' and inputUser!=null">
+                and input_user=#{param3}
+            </if>
+            <if test="param4 != null and param14='' ">
+                AND input_date <![CDATA[>=]]> #{param4}
+            </if>
+            <if test="param5 != null and param5!=''">
+                AND input_date <![CDATA[<=]]>#{param5}
+            </if>
+        </where>
+    </select>
+    <!--更具ID获取对应的商品信息-->
+    <select id="repeatGoodsId" resultType="com.huibo.gf.appraisal.po.GoodsPo">
+        select * from i_pawn_goods where goods_id =#{goodsId}
+    </select>
+    <!--根据小类的名称获取小类的编码-->
+    <select id="getSmallCodeBycatName" resultType="java.lang.String">
+        select cat_code  from c_pawn_product_small where cat_name =#{good}
+    </select>
+    <!--根据三级的名称获取三级的编码-->
+    <select id="getThreeCodeBycatName" resultType="java.lang.String">
+           select cat_code from c_pawn_product_three where cat_name =#{good}
+    </select>
+    <select id="getBrandCodeByBrandName" resultType="java.lang.String">
+         select brand_code from c_pawn_brand where brand_name =#{good}
+    </select>
+    <!--更据ID查询商品的属性-->
+    <select id="getAttrByGoodsId" resultType="com.huibo.gf.appraisal.po.AttrGoodsPo">
+        select * from i_pawn_goods_attr_rel where goods_id =#{goodsId}
+    </select>
+</mapper>

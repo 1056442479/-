@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评估鉴定</title>
+    <script src="../../js/jquery.min.js"></script>
+    <link href="../../layui/css/layui.css"  rel="stylesheet" type="text/css" >
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/name.js"></script>
+    <script src="../../appraisal/js/appraisal.js"></script>
+    <link href="../../appraisal/css/appraisal.css"  rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table  id="appraise" lay-filter="appraise" ></table>
+<!--新增评估-->
+<form id="appraiseForm" class="layui-form" lay-filter="appraiseForm">
+    <div class="layui-form-item" style="width: 100%;margin-top:10px">
+        <ul style="width: 100%;height: 160px" id="appraise-photo"  class="layer-photos-demo">
+        </ul>
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="appraise-goodsCode"  name="goodsId" readonly class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">评估编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="appraiseId" required  lay-verify="required|number|repeatAppraiseCode" placeholder="请输入评估编号" class="layui-input" style="width: 83%;margin-top:10px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">评估人</label>
+        <div class="layui-input-block">
+            <input type="text"  name="createBy" required  lay-verify="required" placeholder="请输入评估人" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">评估时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="appraise-createTime" name="createTime" required  lay-verify="required" placeholder="请输入评估时间" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">查看消息</label>
+        <div class="layui-input-block">
+            <button class="layui-btn" id="apprise-history" type="button">历史评估<span class="layui-badge layui-bg-orange" id="apprise-xiaoxi"></span></button>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">官方价格</label>
+        <div class="layui-input-block">
+            <input type="text"  name="officialPrice" required  lay-verify="required|number" placeholder="请输入官方价格" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">评估价</label>
+        <div class="layui-input-block">
+            <input type="text"  name="valuationPrice" required  lay-verify="required|number" placeholder="请输入评估价格" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">典当价</label>
+        <div class="layui-input-block">
+            <input type="text"  name="pawnPrice" required  lay-verify="required|number" placeholder="请输入典当价格" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收购价</label>
+        <div class="layui-input-block">
+            <input type="text"  name="pchasePrice" required  lay-verify="required|number" placeholder="请输入收购价格" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">售卖价</label>
+        <div class="layui-input-block">
+            <input type="text"  name="sellingPrice" required  lay-verify="required|number" placeholder="请输入售卖价格" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">租价</label>
+        <div class="layui-input-block">
+            <input type="text"  name="rentalPrice" required  lay-verify="required|number" placeholder="请输入租价" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea id="appraiseDesc" name="appraiseDesc" placeholder="请输入评估描述" class="layui-input" style="width: 83%;height: 80px">
+
+            </textarea>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="apprise" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeAppriseWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+<table  id="identifyHistory" lay-filter="identifyHistory" ></table>
+<!--新增鉴定-->
+<form id="identify" class="layui-form" lay-filter="identify">
+    <div class="layui-form-item" style="width: 100%;margin-top:10px">
+        <ul style="width: 100%;height: 160px" id="photo" class="layer-photos-demo">
+        </ul>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="goodsCode"  name="goodsId" readonly class="layui-input" style="width: 83%">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">鉴定编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="identifyId" name="identifyId" placeholder="请输入鉴定编号" required  lay-verify="required|number|repeatIdentifyCode" class="layui-input" style="width: 83%;margin-top:10px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">鉴定人</label>
+        <div class="layui-input-block">
+            <input type="text" id="createBy" name="createBy" required  lay-verify="required" placeholder="请输入鉴定人" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">鉴定时间</label>
+        <div class="layui-input-block">
+            <input type="text" id="createTime" name="createTime" required  lay-verify="required" placeholder="请输入鉴定时间" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">新旧程度</label>
+        <div class="layui-input-block">
+            <select id="goodsQuality" name="goodsQuality" lay-verify="required">
+                <option value="全新" selected>全新</option>
+                <option value="九成">九成</option>
+                <option value="八成">八成</option>
+                <option value="七成">七成</option>
+                <option value="六成">六成</option>
+                <option value="五成">五成</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">查看消息</label>
+        <div class="layui-input-block">
+            <button class="layui-btn" id="history" type="button">历史鉴定<span class="layui-badge layui-bg-orange" id="xiaoxi"></span></button>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea id="identifyDesc" name="identifyDesc" placeholder="请输入鉴定描述" class="layui-input" style="width: 83%;height: 80px">
+
+            </textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">鉴定结果</label>
+        <div class="layui-input-block">
+            <input type="radio" name="identifyResult" value="正品" title="正品" checked>
+            <input type="radio" name="identifyResult" value="假货" title="假货" >
+            <input type="radio" name="identifyResult" value="资料不全" title="资料不全">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addIdentify" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeIdentifyWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+<!--新增商品-->
+<form class="layui-form" id="editForm" lay-filter="editForm" enctype="multipart/form-data" >
+    <div class="layui-tab" >
+        <ul class="layui-tab-title">
+            <li class="layui-this">商品信息</li>
+            <li>商品属性</li>
+            <li>商品图片</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="goodsId" readonly required lay-verify="required" placeholder="请输入商品编号" autocomplete="off" class="layui-input" style="width: 86%;margin-top:5px">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">来源门店</label>
+                    <div class="layui-input-block">
+                        <select id="edit-shopName" name="shopName" lay-verify="required"></select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">提交人</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="inputUser" lay-verify="required"  placeholder="请输入提交人"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">提交时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="edit-inputDate"  name="inputDate" lay-verify="required"  placeholder="请输入提交时间"  class="layui-input test-item" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" id="edit-shop">
+                    <label class="layui-form-label">商品分类</label>
+                    <div class="layui-input-block" >
+                        <select id="edit-productBig" name="productBig" lay-verify="required" lay-filter="edit-productBig" style="padding-left: 10px">
+                        </select>
+                        <select id="edit-productSmall" name="productSmall"  lay-filter="edit-productSmall">
+                            <option value="">请选择商品小类</option>
+                        </select>
+                        <select id="edit-productThree" name="productThree"  lay-filter="edit-productThree">
+                            <option value="">请选择三级类型</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="goodsName"  placeholder="请输入商品名称" required lay-verify="required"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品品牌</label>
+                    <div class="layui-input-block">
+                        <select id="edit-brandCode" name="brandCode" lay-verify="required"></select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">商品货号</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="articleNumber" lay-verify="required" placeholder="请输入商品货号"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">客户首买价</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="firstPrice" required lay-verify="required|number" placeholder="请输入价格"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">商品描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="goodsDesc" placeholder="请输入内容" class="layui-textarea" style="width: 86%"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--商品属性部分的内容-->
+            <div class="layui-tab-item" id="edit-conf" style="margin-top: 15px">
+
+            </div>
+            <!--图片不分-->
+            <div class="layui-tab-item" id="edit-up" style="margin-top: 15px">
+                <span id="edit-rule" style="font-size:18px;text-align:center;width:100%;height:50px;display:block;color: red"></span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="editGoods" style="margin-left: 26%">确认提交</button>
+                <button type="button" id="closeEditWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!--新增商品-->
+<form class="layui-form" id="addForm" lay-filter="addForm" enctype="multipart/form-data" >
+<div class="layui-tab" >
+    <ul class="layui-tab-title">
+        <li class="layui-this">商品信息</li>
+        <li>商品属性</li>
+        <li>商品图片</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="goodsId" required lay-verify="required|repeatGoodsId|number" placeholder="请输入商品编号" autocomplete="off" class="layui-input" style="width: 86%;margin-top:5px">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">来源门店</label>
+                    <div class="layui-input-block">
+                        <select id="shopName" name="shopName" lay-verify="required"></select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">提交人</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="inputUser" lay-verify="required"  placeholder="请输入提交人"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">提交时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="inputDate"  name="inputDate" lay-verify="required"  placeholder="请输入提交时间"  class="layui-input test-item" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" id="shop">
+                    <label class="layui-form-label">商品分类</label>
+                    <div class="layui-input-block" >
+                        <select id="productBig" name="productBig" lay-verify="required" lay-filter="productBig" style="padding-left: 10px">
+                        </select>
+                        <select id="productSmall" name="productSmall"  lay-filter="productSmall">
+                            <!--<option value="">请选择商品小类</option>-->
+                        </select>
+                        <select id="productThree" name="productThree"  lay-filter="productThree">
+                            <!--<option value="">请选择三级类型</option>-->
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="goodsName"  placeholder="请输入商品名称" required lay-verify="required"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品品牌</label>
+                    <div class="layui-input-block">
+                        <select id="brandCode" name="brandCode" lay-verify="required"></select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">商品货号</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="articleNumber" lay-verify="required" placeholder="请输入商品货号"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">客户首买价</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="firstPrice" required lay-verify="required|number" placeholder="请输入价格"  class="layui-input" style="width: 86%">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">商品描述</label>
+                    <div class="layui-input-block">
+                        <textarea name="goodsDesc" placeholder="请输入内容" class="layui-textarea" style="width: 86%"></textarea>
+                    </div>
+                </div>
+        </div>
+        <!--商品属性部分的内容-->
+        <div class="layui-tab-item" id="conf" style="margin-top: 15px">
+
+        </div>
+        <!--图片不分-->
+        <div class="layui-tab-item" id="up" style="margin-top: 15px">
+            <span id="rule" style="font-size:18px;text-align:center;width:100%;height:50px;display:block;color: red"></span>
+        </div>
+    </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addGoods" style="margin-left: 26%">确认提交</button>
+                <button type="button" id="closeAddWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+            </div>
+        </div>
+</div>
+</form>
+
+<table  id="goods" lay-filter="goods"  style="margin-top: 50px"></table>
+<div style="background: #f2f2f2;width: 100%;height:50px;float: right;position: fixed;top: 0px;">
+    <button id="delete" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;margin-top: 10px;float: right">删除</button>
+    <button id="add"  class="layui-btn layui-btn-normal  layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;float: right;margin-right: 10px;margin-top: 10px">增加</button >
+    <button id="edit"  class="layui-btn layui-btn-normal layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;float: right;margin-right: 10px;margin-top: 10px">编辑</button >
+    <button id="search"  class="layui-btn layui-btn-normal layui-btn-xs"   style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;float: right;margin-right: 10px;margin-top: 10px">查看</button >
+    <button id="tj"  class="layui-btn layui-btn-normal layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;float: right;margin-right: 10px;margin-top: 10px">提交</button >
+    <button id="jd"  class="layui-btn layui-btn-normal layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;float: right;margin-right: 10px;margin-top: 10px">鉴定</button >
+    <button id="appraisal"  class="layui-btn layui-btn-normal layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;font-size: 14px;float: right;margin-right: 10px;margin-top: 10px">评估</button >
+
+</div>
+<script type="text/html" id="toolbarDemo" >
+    <div style="text-align: right">
+        <form id="key">
+        <span  style="float: left;font-size: 14px;font-family: 宋体;color: #01AAED">筛选查询:</span>
+        <input type="text" id="goodsId" name="goodsId"   placeholder="请输入编号和商品名称查询" autocomplete="off" class="layui-input" style="width: 190px;float:left;height:30px;margin-left: 5px;border-radius: 5px">
+        <span  style="float: left;font-size: 14px;font-family: 宋体;margin-left: 10px">状态:</span>
+        <select id="goodsState" name="goodsState" lay-verify="required">
+            <option value="全部">全部</option>
+            <option value="待鉴定">待鉴定</option>
+            <option value="已鉴定">已鉴定</option>
+            <option value="已评估">已评估</option>
+            <option value="无效">无效</option>
+        </select>
+        <span  style="float: left;font-size: 14px;font-family: 宋体;margin-left: 10px">操作人:</span>
+        <input type="text" id="inputUser" name="inputUser"   placeholder="请输入录入人" autocomplete="off" class="layui-input" style="width: 100px;float:left;height:30px;border-radius: 5px;margin-left: 10px">
+        <span  style="float: left;font-size: 14px;font-family: 宋体;margin-left: 10px">录入日期:</span>
+        <input type="text" class="layui-input test-item" id="startTime" name="startTime"  placeholder="yyyy-MM-dd" style="width: 100px;float: left;height:30px;margin-left: 10px">
+        <span style="margin-left: 15px;float: left;display: block">~</span>
+        <input type="text" class="layui-input test-item" id="endTime" name="endTime"  placeholder="yyyy-MM-dd" style="width: 100px;float: left;height:30px;margin-left: 15px">
+        </form>
+    </div>
+</script>
+</body>
+</html>

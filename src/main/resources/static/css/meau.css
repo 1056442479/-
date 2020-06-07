@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#addFirstMenuForm{
+    display: none;
+}
+#updateMenuForm{
+    display: none;
+}
+#addChildMenuForm{
+    display: none;
+}

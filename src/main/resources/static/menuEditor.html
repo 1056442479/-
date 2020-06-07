@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script  type="text/javascript" src="js/name.js"></script>
+    <script  type="text/javascript" src="js/menuEditor.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/meau.css">
+
+</head>
+<body>
+<!--编辑菜单-->
+<form class="layui-form"  id="updateMenuForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单ID</label>
+        <div class="layui-input-block">
+            <input type="text" id="id" name="id"  readonly autocomplete="off" class="layui-input" style="width: 70%;margin-top: 10%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="name" name="name" required  lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input" style="width: 70%;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单URL</label>
+        <div class="layui-input-block">
+            <input type="text" id="url" name="url"  placeholder="请输入菜单URL" autocomplete="off" class="layui-input" style="width: 70%;">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-inline">
+            <input type="text" id="icon" name="icon" placeholder="请输入菜单图标" autocomplete="off" class="layui-input" style="width: 108%">
+        </div>
+    </div>
+    <button id="saveUpdate" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveUpdateMenu" style="margin-left: 30%;">提交</button>
+    <button type="button" id="closeUpdateFirstMenuWin"  class="layui-btn layui-btn-primary"  style="margin-left: 15px">退出</button>
+</form>
+<!--增加子菜单-->
+<form class="layui-form"  id="addChildMenuForm">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级ID</label>
+        <div class="layui-input-block">
+            <input type="text" id="parent-id" name="pid"  readonly autocomplete="off" class="layui-input" style="width: 70%;margin-top: 10%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单ID</label>
+        <div class="layui-input-block">
+            <input type="text" id="child-id" name="id" required  lay-verify="required|number|repeatSonId" placeholder="请输入菜单ID"  autocomplete="off" class="layui-input" style="width: 70%;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="child-name" name="name" required  lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input" style="width: 70%;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单URL</label>
+        <div class="layui-input-block">
+            <input type="text" id="child-url" name="url"  placeholder="请输入菜单URL" autocomplete="off" class="layui-input" style="width: 70%;">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-inline">
+            <input type="text" id="child-icon" name="icon" placeholder="请输入菜单图标" autocomplete="off" class="layui-input" style="width: 108%">
+        </div>
+    </div>
+    <button id="saveAddChild" class="layui-btn layui-btn-normal" lay-submit lay-filter="saveAddChild" style="margin-left: 30%;">提交</button>
+    <button type="button" id="closeChildMenuWin"  class="layui-btn layui-btn-primary"  style="margin-left: 15px">退出</button>
+</form>
+
+<!--新增一级菜单-->
+<form class="layui-form"  id="addFirstMenuForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="id"  required  lay-verify="required|number|repeatId" placeholder="请输入id,只能是数字" autocomplete="off" class="layui-input" style="width: 70%;margin-top: 10%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required  lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input" style="width: 70%;">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-inline">
+            <input type="text"  name="icon" placeholder="请输入菜单图标" autocomplete="off" class="layui-input" style="width: 108%">
+        </div>
+    </div>
+            <button id="save" class="layui-btn layui-btn-normal" lay-submit lay-filter="addFirstMenu" style="margin-left: 30%;">提交</button>
+            <button type="button" id="closeAddFirstMenuWin"  class="layui-btn layui-btn-primary"  style="margin-left: 15px">退出</button>
+</form>
+
+    <table class="layui-table" id="demoTreeTb" lay-filter="demoTreeTb"></table>
+
+
+    <script type="text/html" id="toolbarDemo">
+        <div style="text-align: right" >
+            <button id="deleteMenu" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 90px;height: 30px;line-height: 30px;float: right;font-size: 14px">删除菜单</button>
+            <button id="addFirstMenu"  class="layui-btn layui-btn-xs"  style="width: 90px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">增加一级</button >
+            <button id="addLastMenu"  class="layui-btn layui-btn-xs"  style="width: 90px;height: 30px;line-height: 30px;float: right;font-size: 14px;">增加下级</button >
+            <button id="editMenu"  class="layui-btn layui-btn-xs"  style="width: 90px;height: 30px;line-height: 30px;float: right;font-size: 14px;">编辑菜单</button >
+        </div>
+    </script>
+</body>
+</html>

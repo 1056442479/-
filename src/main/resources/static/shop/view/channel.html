@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>渠道商</title>
+    <script src="../../js/jquery.min.js"></script>
+    <link href="../../layui/css/layui.css"  rel="stylesheet" type="text/css" >
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/name.js"></script>
+    <script src="../../shop/js/channel.js"></script>
+    <link href="../../shop/css/channel.css"  rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!--修改渠道-->
+<form class="layui-form"  id="editForm" lay-filter="editForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">渠道编号</label>
+        <div class="layui-input-block">
+            <input type="text"  name="channelCode" readonly required  lay-verify="required|number" placeholder="请输入渠道编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">渠道名称</label>
+        <div class="layui-input-block">
+            <input type="text"  name="channelName" required  lay-verify="required" placeholder="请输入渠道名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input  name="mobile" placeholder="请输入手机号" required  lay-verify="required|phone" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">证件号码</label>
+        <div class="layui-input-block">
+            <input type="text" name="idNo"  placeholder="请输入身份证号码" required  lay-verify="required"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label">账号名称</label>
+        <div class="layui-input-block">
+            <input type="text"  name="account"   placeholder="请输入账户名称" required lay-verify="required"  class="layui-input"style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label">开户行</label>
+        <div class="layui-input-block">
+            <input type="text"  name="bankName" required lay-verify="required"  placeholder="请输入开户行"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label">账号</label>
+        <div class="layui-input-block">
+            <input type="text"  name="accountName"  required lay-verify="required|number"  placeholder="请输入账户" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">会员数量</label>
+        <div class="layui-input-block">
+            <input type="text"  name="memberCount"  required lay-verify="required|number"  placeholder="请输入会员数量" class="layui-input" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">累计充值</label>
+        <div class="layui-input-block">
+            <input type="text" name="totalCharge"  required lay-verify="required|number"  placeholder="请输入累计充值" class="layui-input" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">累计消费</label>
+        <div class="layui-input-block">
+            <input type="text" name="consume"  required lay-verify="required|number"  placeholder="请输入累计消费" class="layui-input" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block" id="state">
+            <input type="radio" name="channelState" value="启用" title="启用" checked="">
+            <input type="radio" name="channelState" value="停用" title="停用">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="editChannel" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeEditWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+<!--新增渠道-->
+<form class="layui-form"  id="addForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">渠道编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="channelCode" name="channelCode" required  lay-verify="required|repeatChannelCode|number" placeholder="请输入渠道编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">渠道名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="channelName" name="channelName" required  lay-verify="required" placeholder="请输入渠道名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input id="mobile" name="mobile" placeholder="请输入手机号" required  lay-verify="required|phone" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">证件号码</label>
+        <div class="layui-input-block">
+            <input type="text" id="idNo" name="idNo"  placeholder="请输入身份证号码" required  lay-verify="required"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label">账号名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="account" name="account"   placeholder="请输入账户名称" required lay-verify="required"  class="layui-input"style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label">开户行</label>
+        <div class="layui-input-block">
+            <input type="text" id="bankName" name="bankName" required lay-verify="required"  placeholder="请输入开户行"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item" >
+        <label class="layui-form-label">账号</label>
+        <div class="layui-input-block">
+            <input type="text" id="accountName" name="accountName"  required lay-verify="required|number"  placeholder="请输入账户" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">会员数量</label>
+        <div class="layui-input-block">
+            <input type="text" id="memberCount" name="memberCount"  required lay-verify="required|number"  placeholder="请输入会员数量" class="layui-input" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">累计充值</label>
+        <div class="layui-input-block">
+            <input type="text" id="totalCharge" name="totalCharge"  required lay-verify="required|number"  placeholder="请输入累计充值" class="layui-input" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">累计消费</label>
+        <div class="layui-input-block">
+            <input type="text" id="consume" name="consume"  required lay-verify="required|number"  placeholder="请输入累计消费" class="layui-input" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="channelState" value="启用" title="启用" checked="">
+            <input type="radio" name="channelState" value="停用" title="停用">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addShop" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeAddWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+<table  id="channel" lay-filter="channel" ></table>
+<script type="text/html" id="toolbarDemo">
+    <div style="text-align: right" >
+        <span  style="float: left;font-size: 14px;font-family: 宋体">关键字</span>
+        <input type="text" id="keyWord" name="title"   placeholder="请输入编号查询" autocomplete="off" class="layui-input" style="width: 250px;float:left;height:30px;margin-left: 10px;border-radius: 5px">
+        <button id="delete" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">删除</button>
+        <button id="add"  class="layui-btn layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">增加</button >
+        <button id="edit"  class="layui-btn layui-btn-xs" style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;">编辑</button >
+        <button id="search"  class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">查看</button >
+    </div>
+</script>
+</body>
+</html>

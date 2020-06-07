@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.dao.ShopDao">
+    <!--添加门店信息-->
+    <insert id="addShop">
+        insert into c_pawn_shop  (shopCode,shopName,contact,phone,address,shopState)
+        values(#{shopCode},#{shopName},#{contact},#{phone},#{address},#{shopState})
+    </insert>
+    <!--为该门店添加仓库信息-->
+    <insert id="addShopHouse">
+      insert into c_pawn_shop_wh_rel (shopCode,whCode) values (#{param1},#{param2})
+    </insert>
+    <!--添加仓库信息-->
+    <insert id="addHouse">
+         insert into c_pawn_warehouse  (whCode,whName,contact,phone,address,whState)
+        values(#{whCode},#{whName},#{contact},#{phone},#{address},#{whState})
+    </insert>
+    <!--修改门店的信息-->
+    <update id="editShop">
+        update c_pawn_shop set shopName=#{shopName},contact=#{contact},phone=#{phone},
+        address=#{address},shopState=#{shopState}
+        where shopCode=#{shopCode}
+    </update>
+    <!--修改仓库信息-->
+    <update id="editWh">
+           update c_pawn_warehouse set whName=#{whName},contact=#{contact},phone=#{phone},
+        address=#{address},whState=#{whState}
+        where whCode=#{whCode}
+    </update>
+    <!--更据数组删除对应的门店信息-->
+    <delete id="deleteShop">
+        delete from c_pawn_shop where shopCode in
+        <foreach collection="array" item="code" separator="," open="(" close=")">
+            #{code}
+        </foreach>
+    </delete>
+    <!--更据数组删除对应的中间表的门店信息-->
+    <delete id="deleteShopForMid">
+        delete from c_pawn_shop_wh_rel where shopCode in
+        <foreach collection="array" item="code" separator="," open="(" close=")">
+            #{code}
+        </foreach>
+    </delete>
+    <!--更据仓库的code删除中间表的信息-->
+    <delete id="deleteWh">
+        delete from c_pawn_shop_wh_rel where whCode in
+        <foreach collection="param2" item="code" separator="," open="(" close=")">
+            #{code}
+        </foreach>
+        and shopCode=#{param1}
+    </delete>
+    <!--更据门店的code删除中间表的信息-->
+    <delete id="deleteWhByCode">
+        delete from c_pawn_warehouse where whCode in
+        <foreach collection="array" item="code" separator="," open="(" close=")">
+            #{code}
+        </foreach>
+    </delete>
+    <!--更据门店的code删除中间表的信息-->
+    <delete id="deleteWhFromMiddleList">
+        delete from c_pawn_shop_wh_rel where whCode in
+        <foreach collection="array" item="code" separator="," open="(" close=")">
+            #{code}
+        </foreach>
+    </delete>
+    <!--分页获取该门店的信息-->
+    <select id="getShop" resultType="com.huibo.gf.po.ShopPo">
+        select * from c_pawn_shop limit #{param1},#{param2}
+    </select>
+    <!--分页获取仓库的信息-->
+    <select id="getHouse" resultType="com.huibo.gf.po.WareHousePo">
+         select * from c_pawn_warehouse limit #{param1},#{param2}
+    </select>
+    <!--获取门店的所有信息-->
+    <select id="getAllShop" resultType="com.huibo.gf.po.ShopPo">
+        select * from c_pawn_shop
+    </select>
+    <!--获取该门店对应的仓库信息-->
+    <select id="getWhNames" resultType="com.huibo.gf.po.WareHousePo">
+        select
+         w.*
+         from
+	c_pawn_shop  s,
+	c_pawn_shop_wh_rel m,
+	c_pawn_warehouse w
+WHERE s.shopCode=m.shopCode and w.whCode=m.whCode and s.shopCode=#{shopCode}
+    </select>
+    <!--获取所有的仓库信息-->
+    <select id="getAllWhNames" resultType="com.huibo.gf.po.WareHousePo">
+          select *  from c_pawn_warehouse where whState=#{state}
+    </select>
+    <!--查询编码是否重复-->
+    <select id="repeatShopCode" resultType="com.huibo.gf.po.ShopPo">
+          select * from c_pawn_shop where shopCode=#{shopeCode}
+    </select>
+    <!--验证仓库编码是否重复-->
+    <select id="repeatWhCode" resultType="java.lang.Integer">
+        select count(*) from c_pawn_warehouse where whCode=#{whCode}
+    </select>
+    <!--更据仓库名查找他的code-->
+    <select id="selectWhCode" resultType="java.lang.String">
+        select whCode from c_pawn_warehouse where whName=#{s}
+    </select>
+    <!--按条件查询门店信息-->
+    <select id="searchKeyWord" resultType="com.huibo.gf.po.ShopPo">
+        select * from c_pawn_shop
+        <where>
+            <if test="shopCode!=null and shopCode!='' ">
+                shopCode =#{shopCode}
+            </if>
+            <if test="contact!=null and contact!=''">
+                and contact = #{contact}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone = #{phone}
+            </if>
+            <if test="shopState!=null and shopState!=''">
+                and shopState=#{shopState}
+            </if>
+        </where>
+    </select>
+    <!--获取该仓库对应的门店信息-->
+    <select id="getShopNames" resultType="com.huibo.gf.po.ShopPo">
+         select
+         s.*
+         from
+	c_pawn_shop  s,
+	c_pawn_shop_wh_rel m,
+	c_pawn_warehouse w
+WHERE s.shopCode=m.shopCode and w.whCode=m.whCode and w.whCode=#{whcode}
+    </select>
+    <!--按条件查询仓库信息-->
+    <select id="searchKeyWordFromWh" resultType="com.huibo.gf.po.WareHousePo">
+        select * from c_pawn_warehouse
+        <where>
+            <if test="whCode!=null and whCode!='' ">
+                whCode =#{whCode}
+            </if>
+            <if test="contact!=null and contact!=''">
+                and contact = #{contact}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone = #{phone}
+            </if>
+            <if test="whState!=null and whState!=''">
+                and whState=#{whState}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

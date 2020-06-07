@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>广沣共享典当管理后台</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/name.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">广沣共享典当管理后台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+
+        </ul>
+        <ul class="layui-nav layui-layout-right" style="margin-right: 10px">
+            <li class="layui-nav-item">
+                <a href="">控制台<span class="layui-badge">9</span></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="">个人中心<span class="layui-badge-dot"></span></a>
+            </li>
+            <li class="layui-nav-item" lay-unselect="">
+                <a href="javascript:;" id="name"><img src="//t.cn/RCzsdCq" class="layui-nav-img"></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" id="modifyInformation">修改密码</a></dd>
+                    <dd><a href="/logout">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <!--修改登录者的密码信息-->
+    <form id="editUserForm" class="layui-form">
+        <div class="layui-form-item" style="margin-top: 5%;margin-bottom: 20px">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="oldPassword" name="username" lay-verify="required|verifyPassword"
+                       lay-verType="tips" autocomplete="off" placeholder="请输入原密码" class="layui-input"
+                       style="width: 83%">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="newPassword" name="newPassword" lay-verify="required" lay-verType="tips"
+                       autocomplete="off" placeholder="请输入新密码" class="layui-input" style="width: 83%">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="endPassword" lay-verify="required|confirmPass" lay-verType="tips"
+                       autocomplete="off" placeholder="确认密码" class="layui-input" style="width: 83%">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button id="edit" class="layui-btn layui-btn-normal" lay-submit lay-filter="edit"
+                        style="margin-left: 20%">修改
+                </button>
+                <button id="cancel" type="button" class="layui-btn layui-btn-primary" style="margin-left: 30px">取消
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+    <div class="layui-side layui-bg-black" id="left">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree " id="tree" lay-shrink="all" lay-filter="test">
+                <li class="layui-nav-item">
+                    <a class="layui-this" href="main.html">
+                        <i class="layui-icon layui-icon-home"></i>首页
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a id="first" lay-id="1" class="site-demo-active" href="javascript:void(0)"><i
+                            class="layui-icon layui-icon-set"></i>菜单设置</a>
+                    <dl class="layui-nav-child" id="one">
+                        <dd>
+                            <a lay-id="1-2" id="first-second" action="Authorize.html" class="site-demo-active"
+                               data-type="tabAdd" href="javascript:;">
+                                <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                                菜单授权
+                            </a>
+                        </dd>
+                        <dd>
+                            <a lay-id="1-1" id="first-first" action="menuEditor.html" class="site-demo-active"
+                               data-type="tabAdd" href="javascript:;">
+                                <i class="fa   fa-list-alt"></i>
+                                菜单编辑
+                            </a>
+                        </dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <a lay-id="2" id="second" href="javascript:;"><i class="layui-icon layui-icon-user"></i>用户管理</a>
+                    <dl class="layui-nav-child" id="two">
+                        <dd><a lay-id="2-1" id="second-first" action="user.html" class="site-demo-active"
+                               data-type="tabAdd" href="javascript:;">
+                            <i class="fa  fa-pencil-square"></i>
+                            操作用户
+                        </a>
+                        </dd>
+                        <dd><a lay-id="2-2" id="second-second" action="role.html" class="site-demo-active"
+                               data-type="tabAdd" href="javascript:;">
+                            <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                            角色管理
+                        </a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 内容主体区域 -->
+    <div class="layui-body" style="margin-top: -10px;">
+
+        <!-- 选项卡部分 -->
+        <div class="layui-tab layui-tab-card" lay-filter="demo" lay-allowclose="true"
+             style="border-bottom-width: 0px;box-shadow: none;">
+            <ul id="table-panel" class="layui-tab-title"
+                style="width: 80%;margin-top: 0;position: fixed;margin-left: 200px;">
+                <li id="shouye" class="layui-this" lay-id="0">首页</li>
+            </ul>
+            <!-- 关闭选项卡 -->
+            <div class="layui-nav"
+                 style="background-color:#f2f2f2 ;height: 40.8px;width: 7.5%;text-align: center;float: right;position: fixed;margin-left: 79.5%;margin-top: 0;">
+                <li class="layui-nav-item" style="line-height: 40.8px;color: #000000;">
+                    <a id="span" href="javascript:;">
+                        <i class="fa fa-list" style="font-size: 20px;color: #000000;"></i>
+                    </a>
+                    <dl id="close-xxk" class="layui-nav-child"> <!-- 二级菜单 -->
+                        <dd><a href="javascript:;" id="deleteThis">关闭当前</a></dd>
+                        <dd><a href="">关闭全部</a></dd>
+                    </dl>
+                </li>
+            </div>
+            <div class="layui-tab-content" style="margin-top: 40px;">
+                <div class="layui-tab-item layui-show"
+                     style="text-align: center;line-height: 500px;font-size: 25px;font-weight: 600;">
+                    <ul class="site-doc-icon site-doc-anim">
+                        <li>
+                            <div class="layui-anim" data-anim="layui-anim-scaleSpring"> 欢迎使用广沣共享典当管理平台</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="layui-footer" style="text-align: center;">
+        <!-- 底部固定区域 -->
+        Copyright © 2015 - 2016 Company. All Rights Reserved
+    </div>
+</div>
+</body>
+</html>

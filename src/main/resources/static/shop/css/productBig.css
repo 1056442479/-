@@ -1,0 +1,18 @@
+#addForm{
+    display: none;
+}
+.layui-form-item .layui-form-select{
+    width: 100px;
+    float: left;
+    margin-left: 10px;
+}
+.layui-form-item input .layui-unselect{
+    width: 100px;
+    float: left;
+}
+.layui-form-item button{
+    margin-left: 10px;
+}
+#editForm{
+    display: none;
+}

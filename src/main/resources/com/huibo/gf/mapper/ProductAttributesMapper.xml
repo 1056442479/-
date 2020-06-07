@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.shop.dao.GroupDao">
+    <!--增加商品组信息-->
+    <insert id="addGroup">
+        insert into c_pawn_attr_group(  group_code, group_name,group_state,sort_no)
+        values(#{groupCode},#{groupName},#{groupState},#{sortNo})
+    </insert>
+    <!--向中间表添加商品大类的信息-->
+    <insert id="addProductBigByGroupCode">
+        insert into    c_pawn_attr_group_cat_rel (group_code,cat_code)
+        values(#{param1},#{param2})
+    </insert>
+    <!--修改商品组的信息-->
+    <update id="editGroup">
+        update  c_pawn_attr_group  set group_name=#{groupName},group_state=#{groupState},
+         sort_no=#{sortNo}
+        where group_code=#{groupCode}
+    </update>
+    <!--删除中间表的信息-->
+    <delete id="deleteProductBigByGroupCode">
+         delete from c_pawn_attr_group_cat_rel
+         where group_code=#{param1} and cat_code=#{param2}
+    </delete>
+    <!--删除属性组的信息-->
+    <delete id="deleteGroup">
+         delete from
+            c_pawn_attr_group
+         where
+            group_code
+         in
+         <foreach collection="array" item="code" close=")" open="(" separator=",">
+             #{code}
+         </foreach>
+    </delete>
+    <!--删除属性表的属性组的信息-->
+    <delete id="deleteGroupFromGCmid">
+        delete from
+        c_pawn_attr_conf
+        where
+        group_code
+        in
+        <foreach collection="array" item="code" close=")" open="(" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <!--删除中间表的属性组的信息-->
+    <delete id="deleteGroupFromMid">
+        delete from
+        c_pawn_attr_group_cat_rel
+        where
+        group_code
+        in
+        <foreach collection="array" item="code" close=")" open="(" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <!--获取所有的分组信息-->
+    <select id="getAllGroup" resultType="com.huibo.gf.shop.po.GroupPo">
+        select
+           group_code as  groupCode,
+           group_name as  groupName,
+           group_state as  groupState,
+           sort_no as  sortNo
+        from
+          c_pawn_attr_group
+    </select>
+    <!--分页获取所有的分组信息-->
+    <select id="getAllGroupLimit" resultType="com.huibo.gf.shop.po.GroupPo">
+         select
+           group_code as  groupCode,
+           group_name as  groupName,
+           group_state as  groupState,
+           sort_no as  sortNo
+        from
+          c_pawn_attr_group
+          limit #{param1},#{param2}
+    </select>
+    <!--更据属性组获取大类的信息-->
+    <select id="getProductBigByGroup" resultType="com.huibo.gf.shop.po.ProductBigPo">
+        select   p.cat_code as catCode,
+          p.cat_name as catName,
+          p.cat_lvl as catLvl,
+          p.cat_route as catRoute,
+          p.unit as unit,
+          p.cat_desc as catDesc,
+          p.eval_pic_def as evalPicDef,
+          p.sort_no as sortNo,
+          p.is_show as isShow
+        from
+	      c_pawn_product_cat p,
+	      c_pawn_attr_group a,
+          c_pawn_attr_group_cat_rel m
+        where
+          p.CAT_CODE=m.CAT_CODE
+        and
+          a.GROUP_CODE=m.GROUP_CODE
+        and  a.GROUP_CODE=#{groupCode}
+    </select>
+    <!--更据关键字查询商品组的信息-->
+    <select id="searchAttributesByKeyWord" resultType="com.huibo.gf.shop.po.GroupPo">
+         select
+           group_code as  groupCode,
+           group_name as  groupName,
+           group_state as  groupState,
+           sort_no as  sortNo
+        from
+          c_pawn_attr_group
+        where
+          group_name like  CONCAT('%',#{keyWord},'%' )
+    </select>
+    <!--更据编码获取属性组的信息-->
+    <select id="repeatGroupCode" resultType="com.huibo.gf.shop.po.GroupPo">
+          select
+           group_code as  groupCode,
+           group_name as  groupName,
+           group_state as  groupState,
+           sort_no as  sortNo
+        from
+          c_pawn_attr_group
+        where
+          group_code=#{groupCode}
+    </select>
+    <select id="getCatByGigCode" resultType="com.huibo.gf.shop.po.ProductBigPo">
+        select * from c_pawn_product_cat where cat_name=#{catName}
+    </select>
+
+    <select id="getGroupCodeByGigCode" resultType="com.huibo.gf.shop.po.GroupPo">
+         select g.* from
+          c_pawn_product_cat  b,
+          c_pawn_attr_group_cat_rel m,
+          c_pawn_attr_group g
+        where
+          b.cat_code = m.cat_code
+        and
+          g.group_code = m.group_code
+        and
+          m.cat_code in
+          <foreach collection="array" item="code" close=")" open="(" separator=",">
+              #{code}
+          </foreach>
+    </select>
+    <select id="getConfByGroup" resultType="com.huibo.gf.shop.po.ConfPo">
+        select * from   c_pawn_attr_conf
+        where group_code in
+        <foreach collection="array" separator="," open="(" close=")" item="code">
+            #{code}
+        </foreach>
+    </select>
+
+
+</mapper>

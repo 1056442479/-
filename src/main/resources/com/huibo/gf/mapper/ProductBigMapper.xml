@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.shop.dao.ProductBigDao">
+    <!--新增商品大类-->
+    <insert id="addProductBig">
+        insert into  c_pawn_product_cat (cat_code,cat_name,cat_desc,cat_lvl,eval_pic_def)
+        values (#{catCode},#{catName},#{catDesc},#{catLvl},#{evalPicDef})
+    </insert>
+    <!--修改商品大类-->
+    <update id="editProductBig">
+      update c_pawn_product_cat set cat_name=#{catName},cat_desc=#{catDesc},cat_lvl=#{catLvl},eval_pic_def=#{evalPicDef}
+       where
+          cat_code=#{catCode}
+    </update>
+    <!--删除商品信息-->
+    <delete id="deleteProductBig">
+        delete from   c_pawn_product_cat where cat_code in
+        <foreach collection="array" item="code" close=")" open="(" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <!--分页查找商品大类的信息-->
+    <select id="getProduct" resultType="com.huibo.gf.shop.po.ProductBigPo">
+        select
+          cat_code as catCode,
+          cat_name as catName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_cat
+        limit
+          #{param1},#{param2}
+    </select>
+    <!--查找所有商品大类的信息-->
+    <select id="getAllProduct" resultType="com.huibo.gf.shop.po.ProductBigPo">
+         select
+          cat_code as catCode,
+          cat_name as catName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_cat
+    </select>
+    <!--验证编码是否重复-->
+    <select id="repeatProductBigCode" resultType="java.lang.Integer">
+        select count(*) from c_pawn_product_cat where cat_code=#{catCode}
+    </select>
+
+    <!--按名称查找商品的信息-->
+    <select id="searchProductBigByKeyWord" resultType="com.huibo.gf.shop.po.ProductBigPo">
+          select
+          cat_code as catCode,
+          cat_name as catName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_cat
+        where
+          cat_name like  CONCAT('%',#{keyWord},'%' )
+    </select>
+    <!--更据编码查询大类的信息-->
+    <select id="getProductByCode" resultType="com.huibo.gf.shop.po.ProductBigPo">
+          select
+          cat_code as catCode,
+          cat_name as catName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_cat
+        where
+          cat_code=#{whcode}
+    </select>
+    <!--更具大类名称获取大类的信息-->
+    <select id="getProductByCatName" resultType="com.huibo.gf.shop.po.ProductBigPo">
+        select * from   c_pawn_product_cat where cat_name =#{catName}
+    </select>
+</mapper>

@@ -1,0 +1,9 @@
+#addShop{
+    display: none;
+}
+#editShop{
+    display: none;
+}
+.layui-select-title input{
+    height: 30px;
+}

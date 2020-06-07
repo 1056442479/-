@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.shop.dao.ProductSmallDao">
+    <!--新增商品小类-->
+    <insert id="addProductSmall">
+   insert into  c_pawn_product_small (cat_code,cat_name,p_cat_name,unit,cat_desc,is_show,sort_no)
+        values (#{catCode},#{catName},#{pcatName},#{unit},#{catDesc},#{isShow},#{sortNo})
+    </insert>
+    <!--修改商品小类的信息-->
+    <update id="editProductSmall">
+          update c_pawn_product_small set cat_name=#{catName},cat_desc=#{catDesc},cat_lvl=#{catLvl},p_cat_name=#{pcatName},
+          unit=#{unit},is_show=#{isShow},sort_no=#{sortNo}
+       where
+          cat_code=#{catCode}
+    </update>
+    <!--删除商品小类的信息-->
+    <delete id="deleteProductSmall">
+        delete from   c_pawn_product_small where cat_code in
+        <foreach collection="array" item="code" close=")" open="(" separator=",">
+            #{code}
+        </foreach>
+    </delete>
+    <!--获取所有商品小类的信息-->
+    <select id="getAllProductSmall" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+         select
+          cat_code as catCode,
+          cat_name as catName,
+          p_cat_name as pcatName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_small
+    </select>
+    <!--分页获取所有商品小类的信息-->
+    <select id="getProductSmallLimit" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+           select
+          cat_code as catCode,
+          cat_name as catName,
+          p_cat_name as pcatName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_small
+        limit #{param1},#{param2}
+    </select>
+    <!--按分类名称查询-->
+    <select id="searchProductSmallByKeyWord" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+         select
+            cat_code as catCode,
+          cat_name as catName,
+          p_cat_name as pcatName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_small
+        where
+          cat_name like  CONCAT('%',#{keyWord},'%' )
+    </select>
+    <!--更据编码获取商品小类的信息-->
+    <select id="getProductSmallByCode" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+         select
+            cat_code as catCode,
+          cat_name as catName,
+          p_cat_name as pcatName,
+          cat_lvl as catLvl,
+          cat_route as catRoute,
+          unit as unit,
+          cat_desc as catDesc,
+          eval_pic_def as evalPicDef,
+          sort_no as sortNo,
+          is_show as isShow
+        from
+           c_pawn_product_small
+        where
+            cat_code =#{catCode}
+    </select>
+    <!--更据大类的名称获取所有商品小类的信息-->
+    <select id="getProductSmallByBigName" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+        select * from   c_pawn_product_small where  p_cat_name =#{catName}
+    </select>
+    <select id="repeatSmallName" resultType="com.huibo.gf.shop.po.ProductSmallPo">
+        select * from  c_pawn_product_small where cat_name =#{smallName}
+    </select>
+</mapper>

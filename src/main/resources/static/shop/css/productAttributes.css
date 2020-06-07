@@ -1,0 +1,15 @@
+#addGroup{
+    display: none;
+}
+#editGroup{
+    display: none;
+}
+#addAttr{
+    display: none;
+}
+#editAttr{
+    display: none;
+}
+.layui-layer-shade{
+    display: none;
+}

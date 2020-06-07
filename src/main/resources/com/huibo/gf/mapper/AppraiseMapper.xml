@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.appraisal.dao.AppraiseDao">
+    <!--新增评估记录-->
+    <insert id="addApprise">
+        insert into  i_pawn_goods_appraise_log (appraise_id,goods_id,official_price,valuation_price,
+        pawn_price,selling_price,appraise_desc,create_by,create_time,rental_price)
+        values(#{appraiseId},#{goodsId},#{officialPrice},#{valuationPrice},#{pawnPrice},
+        #{sellingPrice},#{appraiseDesc},#{createBy},#{createTime},#{rentalPrice})
+    </insert>
+    <!--修改商品的状态-->
+    <update id="editGoodsState">
+        update i_pawn_goods set goods_state =#{param2} where goods_id = #{param1}
+    </update>
+    <!--/*获取所有评估的信息*/-->
+    <select id="getAllAppraiseInformation" resultType="com.huibo.gf.appraisal.po.AppraisePo">
+        select * from i_pawn_goods_appraise_log
+    </select>
+    <!--分页获取评估的信息-->
+    <select id="getAllAppraiseLimit" resultType="com.huibo.gf.appraisal.po.AppraisePo">
+          select * from i_pawn_goods_appraise_log limit #{param1},#{param2}
+    </select>
+    <!--更具评估编码获取对应的信息-->
+    <select id="repeatAppraiseCode" resultType="com.huibo.gf.appraisal.po.AppraisePo">
+        select * from  i_pawn_goods_appraise_log where appraise_id=#{appriseId}
+    </select>
+    <!--更距商品编码查询评估人-->
+    <select id="getAppraisePeopleByGoodsId" resultType="com.huibo.gf.appraisal.po.AppraisePo">
+        select * from  i_pawn_goods_appraise_log where goods_id=#{goodsId}
+    </select>
+</mapper>

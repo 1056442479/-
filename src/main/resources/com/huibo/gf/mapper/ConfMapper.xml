@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.shop.dao.ConfDao">
+    <!--新增商品属性-->
+    <insert id="addAttr">
+        insert into c_pawn_attr_conf(attr_code,attr_name,sort_no,attr_type,options, group_code)
+        values(#{attrCode},#{attrName},#{sortNo},#{attrType},#{options},#{groupCode})
+    </insert>
+    <!--修改商品属性的信息-->
+    <update id="editAttr">
+         update c_pawn_attr_conf  set attr_name=#{attrName},sort_no=#{sortNo},attr_type=#{attrType},
+         options=#{options} where attr_code=#{attrCode}
+    </update>
+    <!--删除商品属性-->
+    <delete id="deleteConf">
+        delete from  c_pawn_attr_conf where attr_code in
+        <foreach collection="array" separator="," open="(" close=")" item="code">
+            #{code}
+        </foreach>
+    </delete>
+    <!--更据属性组获取商品属性的配置信息-->
+    <select id="getConfByGroup" resultType="com.huibo.gf.shop.po.ConfPo">
+    select
+    attr_code as attrCode,
+    group_code as groupCode,
+    attr_name as attrName,
+    attr_type as attrType,
+    options,
+    sort_no as sortNo
+    from
+    c_pawn_attr_conf
+    where
+    group_code =#{groupCode}
+    </select>
+    <!--更据关键字查询商品属性的信息-->
+    <select id="searchConfByKeyWord" resultType="com.huibo.gf.shop.po.ConfPo">
+         select
+    attr_code as attrCode,
+    group_code as groupCode,
+    attr_name as attrName,
+    attr_type as attrType,
+    options,
+    sort_no as sortNo
+    from
+       c_pawn_attr_conf
+    where
+      attr_code =#{param1}
+    and
+      group_code=#{param2}
+    </select>
+    <!--更据属性编码获取商品属性的配置信息-->
+    <select id="repeatAttrCode" resultType="com.huibo.gf.shop.po.ConfPo">
+         select
+    attr_code as attrCode,
+    group_code as groupCode,
+    attr_name as attrName,
+    attr_type as attrType,
+    options,
+    sort_no as sortNo
+    from
+    c_pawn_attr_conf
+    where
+    attr_code=#{attrCode}
+    </select>
+</mapper>

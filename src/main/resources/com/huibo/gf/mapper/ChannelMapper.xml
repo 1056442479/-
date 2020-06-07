@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.shop.dao.ChannelDao">
+    <!--增加渠道信息-->
+    <insert id="addChannel">
+        insert into   i_pawn_channel (channel_code, channel_name,mobile, id_no, account_name, bank_name, account
+        ,member_count, total_charge,consume,channel_state)
+        values (#{channelCode},#{channelName},#{mobile},#{idNo},#{accountName},#{bankName},#{account},#{memberCount},
+        #{totalCharge},#{consume},#{channelState})
+    </insert>
+    <!--修改渠道信息-->
+    <update id="editChannel">
+        update  i_pawn_channel set channel_name=#{channelName},mobile=#{mobile},id_no=#{idNo},account_name=#{accountName},
+        bank_name=#{bankName},account=#{account},member_count=#{memberCount},total_charge=#{totalCharge},
+        consume=#{consume},channel_state=#{channelState}
+        where
+        channel_code=#{channelCode}
+    </update>
+    <!--删除渠道的信息-->
+    <delete id="deleteChannel">
+        delete from  i_pawn_channel where  channel_code in
+        <foreach collection="array" separator="," open="(" close=")" item="code">
+            #{code}
+        </foreach>
+    </delete>
+    <!--获取渠道商的所有商品信息-->
+    <select id="getAllChannelInformation" resultType="com.huibo.gf.shop.po.ChannelPo">
+      select
+        channel_code as channelCode,
+        channel_name as channelName,
+        mobile,
+        id_no as idNo,
+        account_name as accountName,
+        bank_name as bankName,
+        account,
+        member_count as memberCount,
+        total_charge as totalCharge,
+        consume,
+       channel_state as   channelState
+      from
+       i_pawn_channel
+    </select>
+    <!--分页获取渠道商的所有商品信息-->
+    <select id="getAllChannel" resultType="com.huibo.gf.shop.po.ChannelPo">
+         select
+        channel_code as channelCode,
+        channel_name as channelName,
+        mobile,
+        id_no as idNo,
+        account_name as accountName,
+        bank_name as bankName,
+        account,
+        member_count as memberCount,
+        total_charge as totalCharge,
+        consume,
+       channel_state as   channelState
+      from
+       i_pawn_channel
+       limit
+        #{param1},#{param2}
+    </select>
+    <!--验证编码是否重复-->
+    <select id="repeatChannelCode" resultType="java.lang.Integer">
+        select count(*) from i_pawn_channel where  channel_code=#{channelCode}
+    </select>
+    <!--按编码查询渠道的信息-->
+    <select id="searchKeyWordFromChannel" resultType="com.huibo.gf.shop.po.ChannelPo">
+         select
+        channel_code as channelCode,
+        channel_name as channelName,
+        mobile,
+        id_no as idNo,
+        account_name as accountName,
+        bank_name as bankName,
+        account,
+        member_count as memberCount,
+        total_charge as totalCharge,
+        consume,
+       channel_state as   channelState
+      from
+       i_pawn_channel
+       where
+         channel_code=#{keyWord}
+    </select>
+    <!--按编码查询渠道的信息-->
+    <select id="searchChannelByCode" resultType="com.huibo.gf.shop.po.ChannelPo">
+          select
+        channel_code as channelCode,
+        channel_name as channelName,
+        mobile,
+        id_no as idNo,
+        account_name as accountName,
+        bank_name as bankName,
+        account,
+        member_count as memberCount,
+        total_charge as totalCharge,
+        consume,
+       channel_state as   channelState
+      from
+       i_pawn_channel
+       where
+         channel_code=#{channelCode}
+    </select>
+</mapper>

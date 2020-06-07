@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="js/jquery.min.js"></script>
+    <link href="layui/css/layui.css"  rel="stylesheet" type="text/css" />
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <script src="layui/layui.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body style="background-color: #2F4056;">
+
+<form id="main" class="layui-form layui-form-pane" action="login" lay-filter="formTest" method="post">
+    <div  style="width: 510px;height: 500px;border: 1px solid  #f2f2f2;border-radius: 10px;background-color: #F0F0F0;margin: 0 auto;margin-top: 7%;">
+        <span style="font-weight: 600;font-size: 24px;margin-top: 20px;display: block;margin-left: 28%;">广沣共享典当管理平台</span>
+
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 50px;">
+            <label class="layui-form-label layui-icon layui-icon-username" style="width: 50px;"></label>
+            <div class="layui-input-block" style="margin-left:50px;">
+                <input type="text" id="username" name="username" lay-verify="required"  lay-verType="tips" autocomplete="off" placeholder="请输入用户名" class="layui-input" style="width: 300px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 20px;">
+            <label class="layui-form-label layui-icon layui-icon-password" style="width: 50px;"></label>
+            <div class="layui-input-block" style="margin-left:50px;">
+                <input type="password" name="password" lay-verify="required|pass" lay-verType="tips" autocomplete="off" placeholder="请输入密码" class="layui-input" style="width: 300px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 20px;">
+            <label class="layui-form-label layui-icon layui-icon-vercode zyl_lofo_icon" style="width: 50px;border-right: 0;"></label>
+            <input type="text" name="yzm" id="vercode" lay-verify="required|vercodes" autocomplete="off" placeholder="验证码" class="layui-input" maxlength="4" style="width: 130px;">
+            <span style="width: 120px;height: 38px;display: block;float: right;margin-top: -38px;margin-right: 50px;line-height: 38px;text-align: center;font-size: 25px;">
+                <IMG alt="验证码" src="/getImageCode">
+            </span>
+        </div>
+
+        <div id="" style="margin-left: 70px;margin-top: 10px;">
+            <input type="checkbox" name="remberpassword" title="记住密码" lay-skin="primary" checked >
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <div class="layui-input-block">
+                <button id="tijiao" class="layui-btn" lay-submit lay-filter="login"  style="width:86%;margin-left: -28px;border-radius: 5px;font-size: 15px;letter-spacing: 5px;">登录</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: -130px;text-align: center;color: #d2d2d2;">
+    其他登录方式
+</div>
+<div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 30px;text-align: center">
+    <a dlfs="qq" href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101780702&response_type=code&redirect_uri=http://www.pawntest.com/qqlogin&state=test" class=" layui-icon layui-icon-login-qq" style="font-size: 30px;margin-left: 30px;color: #1E9FFF;"></a>
+    <a href="#" id="phone" class="layui-icon layui-icon-cellphone" style="font-size: 30px;margin-left: 50px;color:#FFB800"></a>
+    <a href="#" class="layui-icon layui-icon-login-wechat" style="font-size: 30px;margin-left: 50px;color: green"></a>
+    <a href="#" class="layui-icon layui-icon-login-weibo" style="font-size: 30px;margin-left: 50px;color: red;"></a>
+</div>
+
+<span style="text-align: center;line-height: 50px;position:fixed;bottom:0px;margin-left: 40%;">Copyright © 2015 - 2016 Company. All Rights Reserved</span>
+
+<form id="phone-win"  class="layui-form layui-form-pane" action="loginByPhone" method="post">
+    <div  style="width: 510px;height: 450px;border: 1px solid  #f2f2f2;border-radius: 10px;background-color: #F0F0F0;margin: 0 auto;margin-top: 9%;">
+        <span style="font-weight: 600;font-size: 24px;margin-top: 20px;display: block;margin-left: 28%;">广沣共享典当管理平台</span>
+
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 50px;">
+            <label class="layui-form-label layui-icon layui-icon-cellphone" style="width: 50px;"></label>
+            <div class="layui-input-block" style="margin-left:50px;">
+                <input id="phone-number" type="text" name="phone" lay-verify="required"  lay-verType="tips" autocomplete="off" placeholder="请输入手机号码" class="layui-input" style="width: 300px;">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 30px;">
+            <label class="layui-form-label layui-icon layui-icon-vercode zyl_lofo_icon" style="width: 50px;border-right: 0;"></label>
+            <input type="text" name="code"  lay-verify="required|vercodes" autocomplete="off" placeholder="验证码" class="layui-input" maxlength="4" style="width: 160px;">
+            <a id="yzm" href="javascript:void(0)" class="layui-btn layui-btn-danger" style="width: 120px;height: 38px;display: block;float: right;margin-top: -38px;line-height: 38px;text-align: center;margin-right: 10px;">获取验证码</a>
+        </div>
+
+
+        <div class="layui-form-item" style="margin-top: 30px;">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="phone" style="width:86%;margin-left: -28px;border-radius: 5px;font-size: 15px;letter-spacing: 5px;">登录</button>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 30px;text-align: center;color: #d2d2d2;">
+            其他登录方式
+        </div>
+        <br>
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 20px;">
+            <a dlfs="qq"  href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=101780702&response_type=code&redirect_uri=http://www.pawntest.com/qqlogin&state=test" class=" layui-icon layui-icon-login-qq" style="font-size: 30px;margin-left: 30px;color: #1E9FFF;"></a>
+            <a id="user-win" href="#"  class="layui-icon layui-icon-user" style="font-size: 30px;margin-left: 50px;color:#FFB800"></a>
+            <a href="#" class="layui-icon layui-icon-login-wechat" style="font-size: 30px;margin-left: 50px;color: green"></a>
+            <a href="#" class="layui-icon layui-icon-login-weibo" style="font-size: 30px;margin-left: 50px;color: red;"></a>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

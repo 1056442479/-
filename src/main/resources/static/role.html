@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <script src="js/role.js"></script>
+    <script src="js/name.js"></script>
+    <link href="layui/css/layui.css"  rel="stylesheet" type="text/css" />
+    <link href="css/role.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<!--编辑角色-->
+<form class="layui-form"  id="updateUserRole">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="update-roleid" name="roleid" readonly  placeholder="请输入角色编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="update-name" name="rolename" required  lay-verify="required" placeholder="请输入角色名" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">角色描述</label>
+        <div class="layui-input-block">
+            <input type="text" id="update-desc" name="desc"  placeholder="请输入"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所有成员</label>
+        <div class="layui-input-block">
+            <div id="getUpdateAllUser" class="demo-transfer" style="margin: 0 auto"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="updateRole" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeUpdateWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+<!--新增角色-->
+<form class="layui-form"  id="addUserRole">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="roleid" name="roleid" required  lay-verify="required|repeatRoleId" placeholder="请输入角色编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="name" name="rolename" required  lay-verify="required|repeatRoleName" placeholder="请输入角色名" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">角色描述</label>
+        <div class="layui-input-block">
+            <input type="text" id="desc" name="desc"  placeholder="请输入"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所有成员</label>
+        <div class="layui-input-block">
+            <div id="getAllUser" class="demo-transfer" style="margin: 0 auto"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addRole" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeAddWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+<table  id="table" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div style="text-align: right" >
+        <span  style="float: left;font-size: 14px;font-family: 宋体">关键字</span>
+        <input type="text" id="keyWord" name="title"   placeholder="请输入角色编号" autocomplete="off" class="layui-input" style="width: 250px;float:left;height:30px;margin-left: 10px;border-radius: 5px">
+        <button id="delete" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">删除</button>
+        <button id="add"  class="layui-btn layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">增加</button >
+        <button id="edit"  class="layui-btn layui-btn-xs" style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;">编辑</button >
+        <button id="search"  class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">查看</button >
+    </div>
+</script>
+</body>
+</html>

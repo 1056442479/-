@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <script src="js/authorize.js"></script>
+    <script src="js/name.js"></script>
+    <script src="js/role.js"></script>
+    <link href="layui/css/layui.css"  rel="stylesheet" type="text/css" />
+    <link href="css/role.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="tree"></div>
+
+    <table  id="table" lay-filter="test" ></table>
+    <script type="text/html" id="toolbarDemo">
+        <div style="text-align: right" >
+            <span  style="float: left;font-size: 14px;font-family: 宋体">关键字</span>
+            <input type="text" id="keyWord" name="title"   placeholder="请输入角色编号" autocomplete="off" class="layui-input" style="width: 250px;float:left;height:30px;margin-left: 10px;border-radius: 5px">
+            <button id="search" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">查询</button>
+            <button id="shouquan"  class="layui-btn layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">授权</button >
+        </div>
+    </script>
+</body>
+</html>

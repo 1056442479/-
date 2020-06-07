@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.appraisal.dao.IdentifyDao">
+    <!--新增的鉴定记录-->
+    <insert id="addIdentify">
+        insert into i_pawn_goods_identify_log(identify_id,goods_id,goods_quality,identify_desc,identify_result,
+        create_by,create_time,identify_state)
+        values(#{identifyId},#{goodsId},#{goodsQuality},#{identifyDesc},#{identifyResult},#{createBy},#{createTime},#{identifyState})
+    </insert>
+    <!--改变商品的状态信息-->
+    <update id="updateGoodsState">
+        update i_pawn_goods set goods_state=#{param2} where goods_id=#{param1}
+    </update>
+    <!--获取所有的已鉴定的信息-->
+    <select id="getAllIdentify" resultType="com.huibo.gf.appraisal.po.IdentifyPo">
+        select * from i_pawn_goods_identify_log where identify_state=#{state}
+    </select>
+    <!--更距商品编码查询鉴定人-->
+    <select id="getIdentifyPeopleByGoodsId" resultType="com.huibo.gf.appraisal.po.IdentifyPo">
+         select * from i_pawn_goods_identify_log where goods_id=#{goodsId}
+    </select>
+    <!--更距鉴定编码获取对应额信息-->
+    <select id="repeatIdentifyCode" resultType="com.huibo.gf.appraisal.po.IdentifyPo">
+        select * from i_pawn_goods_identify_log where identify_id=#{identifyId}
+    </select>
+</mapper>

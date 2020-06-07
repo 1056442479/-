@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品小类</title>
+    <script src="../../js/jquery.min.js"></script>
+    <link href="../../layui/css/layui.css"  rel="stylesheet" type="text/css" >
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/name.js"></script>
+    <script src="../../shop/js/subcategories.js"></script>
+    <link href="../../shop/css/subcategories.css"  rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!--修改商品小类-->
+<form class="layui-form"  id="editForm" lay-filter="editForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类编号</label>
+            <div class="layui-input-block">
+                <input type="text"  name="catCode" readonly  placeholder="请输入分类编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-block">
+                <input type="text"  name="catName" required  lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input" style="width: 83%">
+            </div>
+        </div>
+
+        <div class="layui-form-item" id="addFen">
+            <label class="layui-form-label">上级分类</label>
+            <div class="layui-input-block">
+                <select name="pcatName" lay-verify="pcatName" ID="update" >
+                </select>
+                <!--<input  name="pcatName" placeholder="请输入上级分类" required  lay-verify="required" class="layui-input" style="width: 83%">-->
+            </div>
+        </div>
+
+
+
+    <div class="layui-form-item">
+            <label class="layui-form-label">数量单位</label>
+            <div class="layui-input-block">
+                <input  name="unit" placeholder="请输入单位" required  lay-verify="required" class="layui-input" style="width: 83%">
+            </div>
+        </div>
+
+        <div class="layui-form-item " >
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="text"  name="sortNo"  placeholder="排序"  class="layui-input" style="width: 83%">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item " >
+            <label class="layui-form-label">分类描述</label>
+            <div class="layui-input-block">
+            <textarea name="catDesc" placeholder="请输入内容" class="layui-textarea" style="width: 83%">
+
+            </textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item ">
+            <label class="layui-form-label">是否显示</label>
+            <div class="layui-input-block" >
+                <input type="radio" name="isShow" value="是" title="是" checked="">
+                <input type="radio" name="isShow" value="否" title="否">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="editSmall" style="margin-left: 26%">确认提交</button>
+                <button type="button" id="closeEditWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+            </div>
+        </div>
+    </form>
+
+<!--新增商品小类-->
+<form class="layui-form"  id="addForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="catCode" name="catCode" required  lay-verify="required|repeatProductSmallByCode|number" placeholder="请输入分类编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="catName" name="catName" required  lay-verify="required|repeatSmallName" placeholder="请输入分类名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级分类</label>
+        <div class="layui-input-block">
+            <select name="pcatName" lay-verify="pcatName" ID="addUp" >
+            </select>
+            <!--<input id="pcatName" name="pcatName" placeholder="请输入上级分类" required  lay-verify="required" class="layui-input" style="width: 83%">-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数量单位</label>
+        <div class="layui-input-block">
+            <input id="unit" name="unit" placeholder="请输入单位" required  lay-verify="required" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item " id="bei">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" id="sortNo" name="sortNo"  placeholder="排序"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">分类描述</label>
+        <div class="layui-input-block">
+            <textarea name="catDesc" placeholder="请输入内容" class="layui-textarea" style="width: 83%">
+
+            </textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-block" id="state">
+            <input type="radio" name="isShow" value="是" title="是" checked="">
+            <input type="radio" name="isShow" value="否" title="否">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addShop" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeAddWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+<!--新增三级类信息-->
+<form class="layui-form"  id="addThreeForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类编号</label>
+        <div class="layui-input-block">
+            <input type="text"  name="catCode" required  lay-verify="required|repeatProductThreeByCode|number" placeholder="请输入分类编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <input type="text"  name="catName" required  lay-verify="required|repeatProductThreeName" placeholder="请输入分类名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级分类</label>
+        <div class="layui-input-block">
+            <select name="pcatName" lay-verify="pcatName" id="two" >
+            </select>
+            <!--<input id="pcatName" name="pcatName" placeholder="请输入上级分类" required  lay-verify="required" class="layui-input" style="width: 83%">-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数量单位</label>
+        <div class="layui-input-block">
+            <input  name="unit" placeholder="请输入单位" required  lay-verify="required" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text"  name="sortNo"  placeholder="排序"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">分类描述</label>
+        <div class="layui-input-block">
+            <textarea name="catDesc" placeholder="请输入内容" class="layui-textarea" style="width: 83%">
+
+            </textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-block" >
+            <input type="radio" name="isShow" value="是" title="是" checked="">
+            <input type="radio" name="isShow" value="否" title="否">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addThree" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeAddThreeWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+<!--修改三级类信息-->
+<form class="layui-form"  id="editThreeForm" lay-filter="editThreeForm">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类编号</label>
+        <div class="layui-input-block">
+            <input type="text"  name="catCode" readonly placeholder="请输入分类编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-block">
+            <input type="text"  name="catName" required  lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级分类</label>
+        <div class="layui-input-block">
+            <select name="pcatName" lay-verify="pcatName" id="edit-two" >
+            </select>
+            <!--<input id="pcatName" name="pcatName" placeholder="请输入上级分类" required  lay-verify="required" class="layui-input" style="width: 83%">-->
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数量单位</label>
+        <div class="layui-input-block">
+            <input  name="unit" placeholder="请输入单位" required  lay-verify="required" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text"  name="sortNo"  placeholder="排序"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item " >
+        <label class="layui-form-label">分类描述</label>
+        <div class="layui-input-block">
+            <textarea name="catDesc" placeholder="请输入内容" class="layui-textarea" style="width: 83%">
+
+            </textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-block" >
+            <input type="radio" name="isShow" value="是" title="是" checked="">
+            <input type="radio" name="isShow" value="否" title="否">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="editThree" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeEditThreeWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+<table  id="product" lay-filter="product" ></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="searchLower">查看下级</a>
+    <a class="layui-btn layui-btn-xs" lay-event="addLower">新增下级</a>
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <div style="text-align: right" >
+        <span  style="float: left;font-size: 14px;font-family: 宋体">关键字</span>
+        <input type="text" id="keyWord" name="title"   placeholder="请输入分类名称查询" autocomplete="off" class="layui-input" style="width: 250px;float:left;height:30px;margin-left: 10px;border-radius: 5px">
+        <!--<span  style="float: left;font-size: 14px;font-family: 宋体">大类</span>-->
+        <!--<select name="pcatName" lay-verify="pcatName" ID="keyWordPcatName" >-->
+            <!--<option value="0571">杭州</option>-->
+        <!--</select>-->
+        <button id="delete" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">删除</button>
+        <button id="add"  class="layui-btn layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">增加</button >
+        <button id="edit"  class="layui-btn layui-btn-xs" style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;">编辑</button >
+        <button id="search"  class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">查看</button >
+    </div>
+</script>
+
+
+<table  id="productLower" lay-filter="productLower" ></table>
+<script type="text/html" id="toolbarDemoLower">
+    <div style="text-align: right" >
+        <span  style="float: left;font-size: 14px;font-family: 宋体">关键字</span>
+        <input type="text" id="keyWordLower" name="title"   placeholder="请输入分类名称查询" autocomplete="off" class="layui-input" style="width: 250px;float:left;height:30px;margin-left: 10px;border-radius: 5px">
+
+        <button id="deleteLower" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">删除</button>
+        <button id="addLower"  class="layui-btn layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">增加</button >
+        <button id="editLower"  class="layui-btn layui-btn-xs" style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;">编辑</button >
+        <button id="searchLower"  class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">查看</button >
+        <button id="back"  class="layui-btn layui-btn-normal layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">返回</button >
+    </div>
+</script>
+</body>
+</html>

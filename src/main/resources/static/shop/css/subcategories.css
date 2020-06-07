@@ -1,0 +1,19 @@
+#addForm{
+    display: none;
+}
+#editForm{
+    display: none;
+}
+#addThreeForm{
+    display: none;
+}
+#editThreeForm{
+    display: none;
+}
+.layui-form-item .layui-form-select{
+    width: 83%;
+}
+.layui-layer-shade{
+    display: none;
+}
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.dao.UserDao">
+    <!--添加用户信息-->
+    <insert id="addUser" parameterType="com.huibo.gf.po.UserPo">
+        insert into sys_user ( username,password,phone,sex)
+        values (#{username},#{password},#{phone},#{sex})
+    </insert>
+    <!--添加菜单-->
+    <insert id="addFirstMenu">
+          insert into menu ( url,name,icon,pid,id)
+        values (#{url},#{name},#{icon},#{pid},#{id})
+    </insert>
+    <!--给该用户绑定openID-->
+    <insert id="addUserOpenId">
+        update sys_user set openId=#{param2}
+        where username =#{param1}
+    </insert>
+    <!--修改用户信息-->
+    <update id="updateUser">
+        update sys_user set username=#{username},phone=#{phone},sex=#{sex}
+        where id =#{id}
+    </update>
+    <!--修改菜单信息-->
+    <update id="updateMenu">
+         update menu set url=#{url},name=#{name},icon=#{icon}
+        where id =#{id}
+    </update>
+    <!--修改用户的密码-->
+    <update id="editUserPassword">
+        update  sys_user set password=#{param2} where username=#{param1}
+    </update>
+    <!--删除用户信息-->
+    <delete id="deleteUsers">
+        delete from sys_user where id in
+        <foreach collection="array" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!--删除菜单表的id-->
+    <delete id="deleteMenu">
+        delete from menu where id in
+        <foreach collection="array" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!--删除中间表的菜单id-->
+    <delete id="deleteMenuFromMid">
+        delete from menu_role where id in
+        <foreach collection="array" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!--更据用户名查询用户信息-->
+    <select id="getUserName" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where username=#{s}
+    </select>
+    <!--更据电话号码查询用户信息-->
+    <select id="getUserByPhone" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where phone=#{phone}
+    </select>
+    <!--分页获取用户信息-->
+    <select id="getUser" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user limit #{param1},#{param2}
+    </select>
+    <!--获取所有用户的信息-->
+    <select id="getAllUser" resultType="com.huibo.gf.po.UserPo">
+          select * from sys_user
+    </select>
+    <!--按照id查询用户-->
+    <select id="searchById" resultType="com.huibo.gf.po.UserPo">
+         select * from sys_user where id=#{keyWord}
+    </select>
+    <!--按照姓名查询用户-->
+    <select id="searchByName" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where username=#{keyWord}
+    </select>
+    <!--按照电话号码查询用户-->
+    <select id="getUserNameByPhone" resultType="com.huibo.gf.po.UserPo">
+         select * from sys_user where phone=#{phone}
+    </select>
+    <!--查询所有菜单信息-->
+    <select id="getMean" resultType="com.huibo.gf.po.MeanPo">
+         select * from menu
+    </select>
+    <!--查询用户名是否重复-->
+    <select id="selectRepeatUserName" resultType="java.lang.Integer">
+        select count(*) from sys_user where username=#{username}
+    </select>
+    <!--查询树形表格的id是否重复-->
+    <select id="repeatId" resultType="java.lang.Integer">
+          select count(*) from menu where id=#{id}
+    </select>
+    <!--查询子菜单的id是否重复-->
+    <select id="repeatSonId" resultType="java.lang.Integer">
+        select count(*) from menu where id=#{ids}
+    </select>
+    <!--验证密码是否正确-->
+    <select id="verifyPassword" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where username=#{param2}
+    </select>
+    <select id="getUsername" resultType="java.lang.Integer">
+        select count(*) from sys_user where username=#{username}
+    </select>
+    <!--更据用户名查找用户信息-->
+    <select id="selectUserName" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where username=#{username}
+    </select>
+    <!--更据用户openid查找用户信息-->
+    <select id="getUserInformationByOpenId" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where openId=#{openId}
+    </select>
+    <!--cha-->
+    <select id="getPassWord" resultType="com.huibo.gf.po.UserPo">
+        select * from sys_user where username=#{username}
+    </select>
+</mapper>

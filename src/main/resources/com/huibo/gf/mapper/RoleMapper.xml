@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间-->
+<mapper namespace="com.huibo.gf.dao.RoleDao">
+    <!--添加用户角色信息-->
+    <insert id="addRole">
+        insert into sys_role  values (#{param1},#{param2},#{param3})
+    </insert>
+    <!--增加用户角色信息-->
+    <insert id="addUserRole">
+         insert into sys_user_role(roleid,username)  values (#{param2},#{param1})
+    </insert>
+    <!--增加角色与窗口的信息-->
+    <insert id="addMenuIdRoleName">
+      insert into menu_role (id,rolename) values (#{param2} ,#{param1})
+    </insert>
+    <!--修改角色信息-->
+    <update id="updateUserRoles">
+        update sys_role set `desc`=#{param2},rolename=#{param3}
+        where roleid=#{param1}
+    </update>
+    <!--按id数组删除角色信息，角色表-->
+    <delete id="deleteRoles">
+        delete from sys_role where roleid in
+        <foreach collection="array" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!--更据角色id数组进行删除，中间表的-->
+    <delete id="deleteRolesFromMid">
+        delete from sys_user_role where roleid in
+        <foreach collection="array" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!--删除用户的角色信息-->
+    <delete id="deleteUserRole">
+        delete from sys_user_role where roleid=#{param2} and username=#{param1}
+    </delete>
+    <!--删除这个角色所拥有的菜单信息-->
+    <delete id="deleteMenuIdRoleName">
+        delete from menu_role where  rolename=#{rolename}
+    </delete>
+    <!--查询所有角色信息-->
+    <select id="getAllRoles" resultType="com.huibo.gf.po.RolePo">
+        select * from sys_role
+    </select>
+    <!--分页查询角色信息-->
+    <select id="getRole" resultType="com.huibo.gf.po.RolePo">
+         select * from sys_role limit  #{param1},#{param2}
+    </select>
+    <!--按编码分页查询角色信息-->
+    <select id="searchRole" resultType="com.huibo.gf.po.RolePo">
+         select * from sys_role where roleid= #{param1}
+    </select>
+    <!--更据名字查找用户的id-->
+    <select id="getUserIdByName" resultType="java.lang.String">
+        select id from sys_user where username=#{s}
+    </select>
+    <!--更据角色id查找用户信息-->
+    <select id="getUserInformationByRoleId" resultType="com.huibo.gf.po.UserPo">
+        select DISTINCT users.* from
+	      sys_user users,
+	      sys_role role,
+	      sys_user_role sur
+        WHERE sur.roleid=role.roleid
+        and sur.username = users.username
+        and role.roleid=#{roleid}
+    </select>
+    <!--查询角色编码是否重复-->
+    <select id="selectRepeatRoleId" resultType="com.huibo.gf.po.RolePo">
+        select * from sys_role where  roleid=#{roleid}
+    </select>
+    <!--查询角色名称是否重复-->
+    <select id="selectRepeatRoleName" resultType="com.huibo.gf.po.RolePo">
+        select * from sys_role where  rolename=#{rolename}
+    </select>
+    <!--更据用户名获取角色信息-->
+    <select id="getLoginUserRole" resultType="com.huibo.gf.po.RolePo">
+         select DISTINCT role.* from
+	        sys_user users,
+	        sys_role role,
+	        sys_user_role sur
+        WHERE
+            sur.roleid=role.roleid
+        and
+            sur.username = users.username
+        and
+            users.username=#{username}
+    </select>
+    <!--更据角色名获取菜单信息-->
+    <select id="getLoginUserMenu" resultType="com.huibo.gf.po.MeanPo">
+      select DISTINCT  m.* from
+	    menu m,
+	    sys_role r,
+	    sys_user s,
+	    menu_role mr
+        WHERE mr.id=m.id and mr.rolename = r.rolename and r.rolename IN
+  <foreach collection="array" open="(" close=")" separator="," item="name">
+      #{name}
+  </foreach>
+    </select>
+</mapper>

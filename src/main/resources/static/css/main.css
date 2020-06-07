@@ -1,0 +1,19 @@
+#shouye i{
+    display: none!important;
+}
+#close-xxk{
+    margin-left: -20px;
+}
+#span span{
+    display: none!important;
+}
+#left .layui-nav-tree a i{
+    padding-right: 10px;
+}
+#left .layui-nav-tree dl i{
+    font-size: 14px;
+    padding-left: 10px;
+}
+#editUserForm{
+    display: none;
+}

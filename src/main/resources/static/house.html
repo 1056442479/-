@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>仓库资料</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <script src="js/name.js"></script>
+    <script src="js/house.js"></script>
+    <link href="layui/css/layui.css"  rel="stylesheet" type="text/css" />
+    <link href="css/house.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--编辑门店信息-->
+<form class="layui-form"  id="editShop">
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="editCode" name="whCode" readonly   autocomplete="off" class="layui-input" style="width: 83%;margin-top:10px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">门店名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="editName" name="whName" required  lay-verify="required" placeholder="请输入门店名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人</label>
+        <div class="layui-input-block">
+            <input id="edit-contact" name="contact" placeholder="请输入门店联系人" required  lay-verify="required" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话号码</label>
+        <div class="layui-input-block">
+            <input id="edit-phone" name="phone"   class="layui-input" required  lay-verify="required|phone" placeholder="请输入电话号码" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <input type="text" id="edit-address" name="address"  placeholder="请输入地址"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block" id="edit-radio">
+            <input type="radio" name="whState" value="启用" title="启用" >
+            <input type="radio" name="whState" value="停用" title="停用">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">关联门店</label>
+        <div class="layui-input-block">
+            <div id="edit-whName"  class="demo-transfer" style="margin: 0 auto"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="editShop" style="margin-left: 26%">确认编辑</button>
+            <button type="button" id="closeEditWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+<!--新增门店信息-->
+<form class="layui-form"  id="addShop">
+    <div class="layui-form-item">
+        <label class="layui-form-label">仓库编号</label>
+        <div class="layui-input-block">
+            <input type="text" id="shopCode" name="whCode" required  lay-verify="required|repeatWhCode|number" placeholder="请输入门店编号" autocomplete="off" class="layui-input" style="width: 83%;margin-top:5px">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">仓库名称</label>
+        <div class="layui-input-block">
+            <input type="text" id="shopName" name="whName" required  lay-verify="required" placeholder="请输入仓库名称" autocomplete="off" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系人</label>
+        <div class="layui-input-block">
+            <input id="contact" name="contact" placeholder="请输入仓库联系人" required  lay-verify="required" class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话号码</label>
+        <div class="layui-input-block">
+            <input id="phone" name="phone"   class="layui-input" required  lay-verify="required|phone" placeholder="请输入电话号码" style="width: 83%"/>
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">仓库地址</label>
+        <div class="layui-input-block">
+            <input type="text" id="address" name="address"  placeholder="请输入地址"  class="layui-input" style="width: 83%">
+        </div>
+    </div>
+
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="whState" value="启用" title="启用" checked="">
+            <input type="radio" name="whState" value="停用" title="停用">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">关联门店</label>
+        <div class="layui-input-block">
+            <div id="whName" name="whShop" class="demo-transfer" style="margin: 0 auto"></div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addShop" style="margin-left: 26%">确认提交</button>
+            <button type="button" id="closeAddWin"  class="layui-btn layui-btn-primary"  style="margin-left: 30px">确认取消</button>
+        </div>
+    </div>
+</form>
+
+<table  id="store" lay-filter="store" ></table>
+<script type="text/html" id="toolbarDemo">
+    <div style="text-align: right" >
+        <span  style="float: left;font-size: 14px;font-family: 宋体">关键字</span>
+        <input type="text" id="keyWord" name="title"   placeholder="请输入仓库编号,联系人名称,手机号" autocomplete="off" class="layui-input" style="width: 250px;float:left;height:30px;margin-left: 10px;border-radius: 5px">
+        <span  style="float: left;font-size: 14px;font-family:宋体;margin-left: 5px">状态</span>
+        <div style="height: 30px;width: 100px;float: left;margin-left: 5px">
+            <select id="state" name="state" lay-filter="state" style="width: 100px;height: 30px">
+                <option value="全部">全部</option>
+                <option value="启用">启用</option>
+                <option value="停用">停用</option>
+            </select>
+        </div>
+
+        <button id="delete" class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">删除</button>
+        <button id="add"  class="layui-btn layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;margin-right: 10px">增加</button >
+        <button id="edit"  class="layui-btn layui-btn-xs" style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px;">编辑</button >
+        <button id="search"  class="layui-btn layui-btn-danger layui-btn-xs"  style="width: 60px;height: 30px;line-height: 30px;float: right;font-size: 14px">查看</button >
+    </div>
+</script>
+</body>
+</html>

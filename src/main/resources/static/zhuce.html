@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery.min.js"></script>
+    <link href="layui/css/layui.css"  rel="stylesheet" type="text/css" />
+    <script src="layui/layui.js"></script>
+    <script src="js/zhuce.js"></script>
+    <script src="js/name.js"></script>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<form id="main" class="layui-form layui-form-pane">
+    <div  style="width: 510px;height: 250px;border: 1px solid  #f2f2f2;border-radius: 10px;background-color: #F0F0F0;margin: 0 auto;margin-top: 7%;">
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 50px;">
+            <label class="layui-form-label layui-icon layui-icon-username" style="width: 50px;">绑定账号</label>
+            <div class="layui-input-block" style="margin-left:50px;">
+                <input type="text" id="username" name="username" lay-verify="required|getUsername"  lay-verType="tips" autocomplete="off" placeholder="请输入公司账号" class="layui-input" style="width: 300px;">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width:70%;margin: 0 auto;margin-top: 20px;">
+            <label class="layui-form-label layui-icon layui-icon-password" style="width: 50px;"></label>
+            <div class="layui-input-block" style="margin-left:50px;">
+                <input type="password" name="password" lay-verify="required|getPassWord" lay-verType="tips" autocomplete="off" placeholder="请输入密码" class="layui-input" style="width: 300px;">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <div class="layui-input-block">
+                <button id="tijiao" class="layui-btn layui-btn-normal " lay-submit lay-filter="tijiao" style="margin-left: 10%">登录</button>
+                <button id="cancel" class="layui-btn layui-btn-primary"  type="button"  style="margin-left: 30px">取消</button>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
